@@ -28,7 +28,7 @@ public class ServeurHttp {
 		}
 		
 		try {
-			System.out.println("Lancement du serveur Http ...");
+			System.out.println("Lancement du serveur Http ... sur le port " + port);
 			serveur = new ServerSocket(port);
 
 			while (true) {

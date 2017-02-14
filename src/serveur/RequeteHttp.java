@@ -53,10 +53,10 @@ public class RequeteHttp {
 				"		<meta charset='ISO-8859-1'>"+
 				"		<title>Requete HTTP</title>"+
 				"	</head>"+
-				"	<body style='text-align:center'>"
-				+ "<h1> Requete HTTP</h1>");
+				"	<body>"
+				+ "<h1 style='text-align:center' > Requete HTTP</h1>");
 
-		sb.append(verbe+" ").append(url.getUrl()+" ").append(version);
+		sb.append(verbe+" ").append(url.getUrl()+" ").append(version+"<br>");
 
 		for(String k:entetes.keySet())
 			sb.append(k+": "+entetes.get(k)+"<br>");

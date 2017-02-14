@@ -6,6 +6,8 @@ import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.net.Socket;
 
+import routage.Dispatcher;
+
 public class Connection extends Thread {
 
 	private Socket socketClient;
@@ -85,8 +87,9 @@ public class Connection extends Thread {
 			}
 //			reponse.setCorps("<html><title>reponse</title><h>example</h></html>");	
 //			ps.println(reponse.toString());
-			
-			reponse = EchoServeur.echoServeur(requete);
+			Dispatcher dispatcher = new Dispatcher(requete);
+			reponse = dispatcher.process();
+			//reponse = EchoServeur.echoServeur(requete);
 			ps.print(reponse.toString());
 			System.out.println("REPONSE HTTP :\n"+reponse.toString()); // TODO remove
 			ps.flush();

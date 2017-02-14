@@ -11,6 +11,7 @@ public class URLHttp {
 	private String url; // url complete chemin et parametres
 	private String chemin;
 	private HashMap<String, String> parametres;
+	private String fragment;
 
 	public URLHttp() {
 		url="";
@@ -21,9 +22,14 @@ public class URLHttp {
 		this.url = urlComplete;
 		chemin="";
 		parametres=new HashMap<String, String>();
+		fragment="";
 	}
 
 	public void parse(String urlComplete) {
+		if(urlComplete.contains("#")){
+			fragment=urlComplete.split("#").length==2?urlComplete.split("#")[1]:"";
+			urlComplete = urlComplete.split("#")[0];
+		}
 		
 		String[] urlTab = urlComplete.split("\\?");
 		if(urlTab.length==2){ // il y a des parametres
@@ -70,6 +76,7 @@ public class URLHttp {
 	public void setChemin(String chemin) {
 		this.chemin = chemin;
 	}
+	
 
 	@Override
 	public String toString() {
