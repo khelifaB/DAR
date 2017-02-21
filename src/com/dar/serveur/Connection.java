@@ -1,12 +1,10 @@
-package serveur;
+package com.dar.serveur;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.net.Socket;
-
-import routage.Dispatcher;
 
 public class Connection extends Thread {
 
@@ -85,11 +83,13 @@ public class Connection extends Thread {
 				ps.close();
 				return;
 			}
-//			reponse.setCorps("<html><title>reponse</title><h>example</h></html>");	
-//			ps.println(reponse.toString());
+			reponse.setCorps("<html><title>reponse</title><h>example</h></html>");	
+
 			Dispatcher dispatcher = new Dispatcher(requete);
 			reponse = dispatcher.process();
-			//reponse = EchoServeur.echoServeur(requete);
+
+//			ps.println(reponse.toString());
+//			reponse = EchoServeur.echoServeur(requete);
 			ps.print(reponse.toString());
 			System.out.println("REPONSE HTTP :\n"+reponse.toString()); // TODO remove
 			ps.flush();

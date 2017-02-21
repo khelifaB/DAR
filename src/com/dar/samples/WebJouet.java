@@ -1,4 +1,4 @@
-package application;
+package com.dar.samples;
 
 import java.awt.Point;
 import java.util.ArrayList;

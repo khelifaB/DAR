@@ -1,11 +1,8 @@
-package routage;
+package com.dar.serveur;
 
-import exception.DarException;
-import serveur.ReponseHttp;
-import serveur.RequeteHttp;
-import serveur.URLHttp;
-import tools.Fichier;
-import tools.Reflexion;
+import com.dar.exception.DarException;
+import com.dar.tools.Fichier;
+import com.dar.tools.Reflexion;
 
 public class Dispatcher {
 	private RequeteHttp requete;
@@ -18,14 +15,17 @@ public class Dispatcher {
 	public ReponseHttp process() {
 		String content = Fichier
 				.lectureFichier("C:\\Users\\khelifa.berrefas\\DAR\\workspace\\DAR1\\src\\routage\\routage.txt");
-		
-		String classe = "application.WebJouet";
-		String methode = "getListPoint";
+
+		String nameMethodWithClass = ServeurHttp.mapUrlToMethod.get(requete.getUrl().getChemin());
 
 		ReponseHttp reponse = new ReponseHttp();
+		String methode = nameMethodWithClass.substring(nameMethodWithClass.lastIndexOf('.') + 1,
+				nameMethodWithClass.length());
+		String classe = nameMethodWithClass.substring(0, nameMethodWithClass.lastIndexOf('.'));
 
 		try {
-			Reflexion.invokeMethod(classe, methode);
+			reponse = (ReponseHttp) Reflexion.invokeMethod(classe, methode, new Object[] { requete, reponse });
+
 		} catch (DarException e) {
 			e.printStackTrace(System.out);
 			reponse.setStatut(400);

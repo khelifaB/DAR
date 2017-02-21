@@ -1,4 +1,4 @@
-package serveur;
+package com.dar.serveur;
 
 public class EchoServeur {
 

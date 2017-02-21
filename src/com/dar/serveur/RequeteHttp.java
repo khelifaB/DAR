@@ -1,4 +1,4 @@
-package serveur;
+package com.dar.serveur;
 
 import java.util.HashMap;
 import java.util.regex.Matcher;
@@ -91,7 +91,7 @@ public class RequeteHttp {
 		try{
 			String[] lignes = requete.split(System.lineSeparator());
 
-			// premiére ligne method /chemin version
+			// premiï¿½re ligne method /chemin version
 			String[] ligne1 = lignes[0].split(" ");
 			setVerbe(VerbeHttp.valueOf(ligne1[0]));
 			url.setUrl(ligne1[1]);url.parse(ligne1[1]);
@@ -116,7 +116,7 @@ public class RequeteHttp {
 		catch(Exception e){
 			valide=false;
 			e.printStackTrace();
-			System.out.println("requette mal formée "+e.getMessage());
+			System.out.println("requette mal formï¿½e "+e.getMessage());
 			return;
 		}
 

@@ -1,4 +1,4 @@
-package tools;
+package com.dar.tools;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -39,7 +39,7 @@ public class Fichier {
 
 			}
 		} catch (FileNotFoundException exception) {
-			System.out.println("Le fichier n'a pas été trouvé");
+			System.out.println("Le fichier n'a pas ï¿½tï¿½ trouvï¿½");
 		}
 		return lines;
 	}

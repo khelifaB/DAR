@@ -1,4 +1,4 @@
-package exception;
+package com.dar.exception;
 
 @SuppressWarnings("serial")
 public class DarException extends Exception{
