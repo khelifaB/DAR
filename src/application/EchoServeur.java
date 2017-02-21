@@ -1,16 +1,13 @@
-package serveur;
+package application;
 
-public class EchoServeur {
+import serveur.ReponseHttp;
+import serveur.RequeteHttp;
 
-	public static ReponseHttp echoServeur(RequeteHttp requete) {
+public class EchoServeur extends Service{
 
+	@Override
+	protected ReponseHttp doGet(RequeteHttp requete) {
 		ReponseHttp reponse = new ReponseHttp();
-
-		//		if(requete.getParametre("type")==null){
-		//			reponse.setStatut(400);
-		//			reponse.setCorps("parametre type attendut");
-		//			return reponse;
-		//		}
 		String enteteAccept = requete.getEntete("Accept");
 		String[] typesAccept = enteteAccept.split(",");
 		
@@ -29,14 +26,11 @@ public class EchoServeur {
 				reponse.setEntete("Content-type","application/json");
 				reponse.setCorps(requete.toJSON());
 				return reponse;
-			
 			}
 		}
 
 		reponse.setStatut(400);
-		reponse.setCorps("Format inconnu");
+		reponse.setCorps("Format non supporte ");
 		return reponse;
-
 	}
-
 }

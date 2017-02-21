@@ -6,6 +6,8 @@ import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.net.Socket;
 
+import application.EchoServeur;
+import application.Service;
 import routage.Dispatcher;
 
 public class Connection extends Thread {
@@ -73,9 +75,6 @@ public class Connection extends Thread {
 			
 			System.out.println("#########################\n"+requete+"##################\n");
 			System.out.println("************** "+requete.getUrl()+" ********************");
-			//String pageResponse = Fichier.lectureFichier("ressources/test-0.txt");
-
-			//ps.println(pageResponse);
 
 		
 			if(!requete.estValide()){
@@ -85,11 +84,25 @@ public class Connection extends Thread {
 				ps.close();
 				return;
 			}
-//			reponse.setCorps("<html><title>reponse</title><h>example</h></html>");	
-//			ps.println(reponse.toString());
-			Dispatcher dispatcher = new Dispatcher(requete);
-			reponse = dispatcher.process();
+
+//			Dispatcher dispatcher = new Dispatcher(requete);
+//			reponse = dispatcher.process();
 			//reponse = EchoServeur.echoServeur(requete);
+			
+			Service service = null;
+			service = Dispatcher.getService(requete);
+			
+			if(service==null){
+				reponse.setStatut(404);
+				reponse.setCorps("<html><head><title>404 Service introuvable</title></head>404 Service introuvable<body>");
+				ps.println(reponse.toString());
+				ps.flush();
+				ps.close();
+				return;
+			}
+			
+			reponse= service.traitementRequete(requete);
+			
 			ps.print(reponse.toString());
 			System.out.println("REPONSE HTTP :\n"+reponse.toString()); // TODO remove
 			ps.flush();
