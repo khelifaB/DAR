@@ -1,25 +1,21 @@
 package routage;
 
 import java.awt.Point;
-import java.awt.image.RescaleOp;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.io.IOException;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 import java.util.List;
 
-import exception.DarException;
-import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 
-import application.Service;
 import serveur.ReponseHttp;
 import serveur.RequeteHttp;
 import serveur.URLHttp;
 import tools.Fichier;
+import tools.Reflexion;
+import application.Service;
+import exception.DarException;
 
 public class Dispatcher {
 	private RequeteHttp requete;
@@ -56,11 +52,8 @@ public class Dispatcher {
 			reponse.setEntete("Content-type", "text/html");
 			reponse.setCorps(pts.toString());
 			System.out.println("#########################");
+			Reflexion.invokeMethod(classe, methode);
 		} catch (Exception e) {
-			e.printStackTrace(System.out);
-			reponse.setStatut(400);
-			reponse.setCorps(e.getMessage());
-			return reponse;
 		}
 
 		return reponse;
