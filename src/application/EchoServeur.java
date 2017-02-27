@@ -2,16 +2,20 @@ package application;
 
 import serveur.ReponseHttp;
 import serveur.RequeteHttp;
+import serveur.Service;
 
 public class EchoServeur extends Service{
 
+	public EchoServeur() {
+	}
+	
 	@Override
 	protected ReponseHttp doGet(RequeteHttp requete) {
 		ReponseHttp reponse = new ReponseHttp();
 		String enteteAccept = requete.getEntete("Accept");
 		String[] typesAccept = enteteAccept.split(",");
 		
-		for(int i=0; i< typesAccept.length;i++){
+		for(int i=0; i < typesAccept.length;i++){
 			String type = typesAccept[i];
 			switch (type) {
 			case "text/plain":

@@ -1,15 +1,17 @@
-package application;
+package serveur;
 
 
 
-import serveur.ReponseHttp;
-import serveur.RequeteHttp;
-import serveur.VerbeHttp;
 
 
 
 public abstract class Service {
 
+	protected RequeteHttp requete;
+	
+	public Service() {
+	}
+	
 	public ReponseHttp traitementRequete(RequeteHttp requete) {
     	
     	if(!requete.estValide()){
@@ -74,5 +76,13 @@ public abstract class Service {
 	}
 	protected  ReponseHttp doConnect(RequeteHttp requete){
 		return nonImplemente(VerbeHttp.CONNECT);
+	}
+
+	public RequeteHttp getRequete() {
+		return requete;
+	}
+
+	public void setRequete(RequeteHttp requete) {
+		this.requete = requete;
 	}
 }

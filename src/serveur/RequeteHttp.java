@@ -101,12 +101,11 @@ public class RequeteHttp {
 			Pattern p = Pattern.compile("(.+):\\s(.+)");
 			Matcher m;
 			for (int i = 1; i < lignes.length; i++) {
-				//System.out.println(tabs[i]);
+				
 				if (!"".equals(lignes[i])) {
 					m = p.matcher(lignes[i]);
 					m.matches();
 					ajouteEntete(m.group(1), m.group(2));
-					//System.out.println("Attribut=" + m.group(1) + " Valeurs=" + m.group(2));
 				}
 			}
 

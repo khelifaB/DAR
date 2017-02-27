@@ -7,8 +7,7 @@ import java.io.PrintStream;
 import java.net.Socket;
 
 import application.EchoServeur;
-import application.Service;
-import routage.Dispatcher;
+
 
 public class Connection extends Thread {
 
@@ -37,17 +36,11 @@ public class Connection extends Thread {
 			ps = new PrintStream(socketClient.getOutputStream());
 			String ligne = "";
 
-
-			//System.out.println("Avant readLine");
 			ligne = br.readLine();
-			//System.out.println("Apres readLine text=#"+textRequete+"#");
-			
 			// Lecture des entetes
 			while (ligne != null && !ligne.equals("")){
 				requeteRecu.append(ligne).append(System.lineSeparator());
-				//System.out.println("Avant readLine");
 				ligne = br.readLine();
-//				System.out.println("Apres readLine text=#"+ligne+"#");
 			}
 			
 			// Analyse de la requete  et creation des entetes
@@ -76,7 +69,6 @@ public class Connection extends Thread {
 			System.out.println("#########################\n"+requete+"##################\n");
 			System.out.println("************** "+requete.getUrl()+" ********************");
 
-		
 			if(!requete.estValide()){
 				reponse.setStatut(400);
 				ps.println(reponse.toString());
@@ -85,23 +77,7 @@ public class Connection extends Thread {
 				return;
 			}
 
-//			Dispatcher dispatcher = new Dispatcher(requete);
-//			reponse = dispatcher.process();
-			//reponse = EchoServeur.echoServeur(requete);
-			
-			Service service = null;
-			service = Dispatcher.getService(requete);
-			
-			if(service==null){
-				reponse.setStatut(404);
-				reponse.setCorps("<html><head><title>404 Service introuvable</title></head>404 Service introuvable<body>");
-				ps.println(reponse.toString());
-				ps.flush();
-				ps.close();
-				return;
-			}
-			
-			reponse= service.traitementRequete(requete);
+			reponse = Dispatcher.getService(requete);
 			
 			ps.print(reponse.toString());
 			System.out.println("REPONSE HTTP :\n"+reponse.toString()); // TODO remove
@@ -118,6 +94,4 @@ public class Connection extends Thread {
 			}
 		}
 	}
-
-
 }
