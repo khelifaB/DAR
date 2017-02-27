@@ -12,6 +12,7 @@ import application.EchoServeur;
 public class Connection extends Thread {
 
 	private Socket socketClient;
+	private static GestionSession gestionSession = new GestionSession();
 
 	public Connection(Socket socketClient) {
 		this.socketClient=socketClient;
@@ -77,7 +78,25 @@ public class Connection extends Thread {
 				return;
 			}
 
+			System.out.println("\t SESSIONS \n"+gestionSession);
+			
+			// Sessions & coockie
+			String coockie = requete.getEntete("Cookie");
+			if(gestionSession.existeSession(coockie)){ // Il existe deja une session
+				SessionHttp session = gestionSession.getSession(coockie);
+				session.setDateDerniereVisite(System.currentTimeMillis());
+				requete.setSession(session);
+				
+				System.out.println("Il existe une session "+requete.getSession());
+				
+			}
 			reponse = Dispatcher.getService(requete);
+			// 
+			if(!gestionSession.existeSession(coockie)){ // Pas session cree une nouvelle
+				gestionSession.ajouterSession(socketClient.getInetAddress().toString(), requete, reponse);
+				System.out.println("Creation d'une nouvelle session "+requete.getSession());
+			}
+			
 			
 			ps.print(reponse.toString());
 			System.out.println("REPONSE HTTP :\n"+reponse.toString()); // TODO remove

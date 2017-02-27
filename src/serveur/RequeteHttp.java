@@ -16,6 +16,7 @@ public class RequeteHttp {
 	private URLHttp url;
 	private String version;
 	private boolean valide;
+	private SessionHttp session;
 
 
 	public RequeteHttp() {
@@ -25,6 +26,7 @@ public class RequeteHttp {
 		url=new URLHttp();
 		version="";
 		valide =false;
+		session=new SessionHttp();
 	}
 
 	public void ajouteEntete(String nomAttribut, String valeur) {
@@ -98,7 +100,7 @@ public class RequeteHttp {
 			setVersion(ligne1[2]);
 
 			// entetes
-			Pattern p = Pattern.compile("(.+):\\s(.+)");
+			Pattern p = Pattern.compile("^([^:]+):\\s(.+)");
 			Matcher m;
 			for (int i = 1; i < lignes.length; i++) {
 				
@@ -174,7 +176,12 @@ public class RequeteHttp {
 		this.version = version;
 	}
 
-
+	public void setSession(SessionHttp session) {
+		this.session = session;
+	}
+	public SessionHttp getSession() {
+		return session;
+	}
 
 
 }

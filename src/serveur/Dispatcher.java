@@ -2,7 +2,7 @@ package serveur;
 
 import java.io.File;
 import java.io.FileReader;
-import java.util.Arrays;
+//import java.util.Arrays;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -14,46 +14,6 @@ import tools.Fichier;
 import tools.Reflexion;
 
 public class Dispatcher {
-	private RequeteHttp requete;
-	private URLHttp url;
-
-	public Dispatcher(RequeteHttp requete) {
-		this.requete = requete;
-	}
-
-	//	public ReponseHttp process() {
-	//		String content = Fichier.lectureFichier("C:\\Users\\khelifa.berrefas\\DAR\\workspace\\DAR1\\src\\routage\\routage.txt");
-	//		String classe = "application.WebJouet";
-	//		String methode = "getListPoint";
-	//
-	//		ReponseHttp reponse = new ReponseHttp();
-	//
-	//		try {
-	//			Class c = Class.forName(classe); // Acc�s � la classe Livre
-	//
-	//			System.out.println(c.getConstructors());
-	//
-	//			Constructor constr = c.getConstructor(); // Obtenir le
-	//			// constructeur
-	//			// (RequeteHttp)
-	//			Object o = constr.newInstance(); // -> new Livre("Programmation
-	//			// Java", 120);
-	//
-	//			Method method = c.getMethod(methode); // Obtenir la m�thode
-	//			// getNombreDeFeuilles(int)
-	//			List<Point> pts = (List<Point>) method.invoke(o); // ->
-	//			// o.getNombreDeFeuilles(2);
-	//			System.out.println("#########################");
-	//			System.out.println(pts);
-	//			reponse.setEntete("Content-type", "text/html");
-	//			reponse.setCorps(pts.toString());
-	//			System.out.println("#########################");
-	//			Reflexion.invokeMethod(classe, methode);
-	//		} catch (Exception e) {
-	//		}
-	//
-	//		return reponse;
-	//	}
 
 	public static ReponseHttp getService(RequeteHttp requete) {
 
@@ -94,10 +54,10 @@ public class Dispatcher {
 								paramatere = new String[m.groupCount()];
 								for(int i=1; i<= m.groupCount(); i++){
 									paramatere[i-1]=m.group(i);
-									System.out.println(paramatere[i-1]);
+//									System.out.println(paramatere[i-1]);
 								}
 							}
-							System.out.println(Arrays.toString(paramatere));
+//							System.out.println(Arrays.toString(paramatere));
 							ReponseHttp reponse =(ReponseHttp) Reflexion.invokeMethod(classe, methodeJava, paramatere, requete);
 							return reponse;
 
@@ -109,8 +69,6 @@ public class Dispatcher {
 			// si pas de methode specifique 
 			// Construire et renvoyre la page d'accueil de l'application
 
-		
-			
 			String cheminAccueil = "ressources/"+nomApplication+".html";
 			File f = new File("ressources/"+nomApplication+".html");
 			if(f.exists()){
