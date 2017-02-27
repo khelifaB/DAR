@@ -1,0 +1,30 @@
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="ISO-8859-1">
+		
+		<title>Point2D</title>
+
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+		<script type="text/javascript">
+		function supprimerPoint()
+			$.ajax({
+			    url: "http://127.0.0.1/points2D/p/"+$("id").val(),
+			    type: "DELETE",
+			    success: function(result) {
+			        // Do something with the result
+			    }
+			});
+		</script>
+	</head>
+	<body>
+	
+		<form action=> 
+			<label>id : </label>
+			<input id="id" type="text" name="id" onclick="supprimerPoint()"/>
+		</form>
+	
+	</body>
+</html>
+

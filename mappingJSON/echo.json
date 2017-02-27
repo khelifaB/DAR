@@ -1,4 +1,6 @@
 {
-	"url" : "/",
+	"url" : "/echo",
 	"classe" : "application.EchoServeur"
+	"methodes" : [ {"type" : "GET", "url" : "/echo", "methode" : "doGet"}
+				 ]
 }

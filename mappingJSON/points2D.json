@@ -1,5 +1,11 @@
 {
-	"url" : "/list",
-	"url" : "/",
+	"url" : "/points2D",
 	"classe" : "application.Points2D"
+	"methodes" : [ { "type" : "GET", 	"url" : "/list", 		 "methode" : "list"},
+				   { "type" : "GET", 	"url" : "/p/([0-9]+)/x", "methode" : "getXbyId" },	
+				   { "type" : "GET", 	"url" : "/p/([0-9]+)/y", "methode" : "getYbyId" },
+				   { "type" : "GET", 	"url" : "/p/([0-9]+)", 	 "methode" : "putPointById" },
+				   { "type" : "POST", 	"url" : "/p", 			 "methode" : "creerPoint" },
+				   { "type" : "DELETE", "url" : "/p/([0-9]+)", 	 "methode" : "supprimerPoint" }
+				 ]
 }
