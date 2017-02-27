@@ -1,5 +1,6 @@
 package serveur;
 
+import java.io.File;
 import java.io.FileReader;
 import java.util.Arrays;
 import java.util.regex.Matcher;
@@ -9,6 +10,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
+import tools.Fichier;
 import tools.Reflexion;
 
 public class Dispatcher {
@@ -27,7 +29,7 @@ public class Dispatcher {
 	//		ReponseHttp reponse = new ReponseHttp();
 	//
 	//		try {
-	//			Class c = Class.forName(classe); // Accès à la classe Livre
+	//			Class c = Class.forName(classe); // Accï¿½s ï¿½ la classe Livre
 	//
 	//			System.out.println(c.getConstructors());
 	//
@@ -37,7 +39,7 @@ public class Dispatcher {
 	//			Object o = constr.newInstance(); // -> new Livre("Programmation
 	//			// Java", 120);
 	//
-	//			Method method = c.getMethod(methode); // Obtenir la méthode
+	//			Method method = c.getMethod(methode); // Obtenir la mï¿½thode
 	//			// getNombreDeFeuilles(int)
 	//			List<Point> pts = (List<Point>) method.invoke(o); // ->
 	//			// o.getNombreDeFeuilles(2);
@@ -69,7 +71,7 @@ public class Dispatcher {
 			System.out.println(url);
 
 			String classe = (String) jsonObject.get("classe");
-			
+
 			JSONArray methodes = (JSONArray)jsonObject.get("methodes");
 
 			for(Object o : methodes){
@@ -79,28 +81,42 @@ public class Dispatcher {
 				String methodeJava = (String)oj.get("methode");
 
 				if(verbe.equals(requete.getVerbe().toString())) {
-					String chemin = requete.getUrl().getChemin().substring(requete.getUrl().getChemin().indexOf('/', 1));
-					
-					if(chemin.matches(urli)){
+					if(requete.getUrl().getChemin().indexOf('/', 1)!=-1){
+						String chemin = requete.getUrl().getChemin().substring(requete.getUrl().getChemin().indexOf('/', 1));
 
-						Pattern p = Pattern.compile(urli);
-						Matcher m = p.matcher(chemin);
-						String[] paramatere=null;
-						
-						if(m.matches()){
-							paramatere = new String[m.groupCount()];
-							for(int i=1; i<= m.groupCount(); i++){
-								paramatere[i-1]=m.group(i);
-								System.out.println(paramatere[i-1]);
+						if(chemin.matches(urli)){
+
+							Pattern p = Pattern.compile(urli);
+							Matcher m = p.matcher(chemin);
+							String[] paramatere=null;
+
+							if(m.matches()){
+								paramatere = new String[m.groupCount()];
+								for(int i=1; i<= m.groupCount(); i++){
+									paramatere[i-1]=m.group(i);
+									System.out.println(paramatere[i-1]);
+								}
 							}
+							System.out.println(Arrays.toString(paramatere));
+							ReponseHttp reponse =(ReponseHttp) Reflexion.invokeMethod(classe, methodeJava, paramatere, requete);
+							return reponse;
+
 						}
-						System.out.println(Arrays.toString(paramatere));
-						ReponseHttp reponse =(ReponseHttp) Reflexion.invokeMethod(classe, methodeJava, paramatere, requete);
-						return reponse;
-
 					}
-
 				}
+			}
+
+			// si pas de methode specifique 
+			// Construire et renvoyre la page d'accueil de l'application
+
+		
+			
+			String cheminAccueil = "ressources/"+nomApplication+".html";
+			File f = new File("ressources/"+nomApplication+".html");
+			if(f.exists()){
+				ReponseHttp reponse = new ReponseHttp();
+				reponse.setCorps(Fichier.lectureFichier(cheminAccueil));
+				return reponse;
 
 			}
 
