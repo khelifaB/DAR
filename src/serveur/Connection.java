@@ -83,6 +83,7 @@ public class Connection extends Thread {
 			
 			// Sessions & coockie
 			String coockie = requete.getEntete("Cookie");
+//			System.out.println("------------ "+coockie+" ---------------");
 			if(gestionSession.existeSession(coockie)){ // Il existe deja une session
 				SessionHttp session = gestionSession.getSession(coockie);
 				session.setDateDerniereVisite(System.currentTimeMillis());

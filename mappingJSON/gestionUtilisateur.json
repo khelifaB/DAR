@@ -1,6 +1,8 @@
 {
 	"url" : "/gestionUtilisateur",
 	"classe" : "application.GestionUtilisateur"
-	"methodes" : [ {"type" : "POST", "url" : "/inscription", "methode" : "inscription"}
+	"methodes" : [ {"type" : "POST", "url" : "/inscription", "methode" : "inscription"},
+				   {"type" : "POST", "url" : "/connection", "methode" : "connection"},
+				   {"type" : "GET", "url" : "/deconnection", "methode" : "deconnection"}
 				 ]
 }

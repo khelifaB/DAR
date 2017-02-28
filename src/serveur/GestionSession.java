@@ -1,18 +1,20 @@
 package serveur;
 
-import java.awt.image.TileObserver;
+
 import java.util.HashMap;
 import java.util.Timer;
 import java.util.TimerTask;
 
 public class GestionSession {
-	private HashMap<String, SessionHttp> sessions;
+	private static HashMap<String, SessionHttp> sessions;
 	
 	public GestionSession() {
 		sessions = new HashMap<String, SessionHttp>();
 	}
 	
 	public boolean existeSession(String coockie) {
+//		System.out.println(sessions.containsKey(coockie));
+//		System.out.println(sessions.keySet());
 		return sessions.containsKey(coockie);
 	}
 	public SessionHttp getSession(String coockie) {
