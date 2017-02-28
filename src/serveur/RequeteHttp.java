@@ -162,6 +162,17 @@ public class RequeteHttp {
 
 	public void setCorps(String corps) {
 		this.corps = corps;
+		if(this.corps.contains("&")){
+			String[] parametre = this.corps.split("&");
+			for (int i = 0; i < parametre.length; i++) {
+				String[] tmp = parametre[i].split("=");
+				if(tmp.length==2)
+					url.getParametres().put(tmp[0], tmp[1]);
+				if(tmp.length==1)
+					url.getParametres().put(tmp[0], null);
+			}
+
+		}
 	}
 
 	public void setVerbe(VerbeHttp verbe) {

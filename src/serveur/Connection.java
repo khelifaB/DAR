@@ -57,6 +57,7 @@ public class Connection extends Thread {
 				char[]corps = new char[iTailleCorps];
 				br.read(corps, 0, iTailleCorps);
 				requete.setCorps(new String(corps));
+				
 			}
 			catch(Exception e){
 				e.printStackTrace();
