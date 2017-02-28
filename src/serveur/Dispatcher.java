@@ -2,6 +2,7 @@ package serveur;
 
 import java.io.File;
 import java.io.FileReader;
+import java.util.Arrays;
 //import java.util.Arrays;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -57,7 +58,7 @@ public class Dispatcher {
 //									System.out.println(paramatere[i-1]);
 								}
 							}
-//							System.out.println(Arrays.toString(paramatere));
+							System.out.println(Arrays.toString(paramatere));
 							ReponseHttp reponse =(ReponseHttp) Reflexion.invokeMethod(classe, methodeJava, paramatere, requete);
 							return reponse;
 

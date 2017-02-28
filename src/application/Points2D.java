@@ -2,9 +2,16 @@ package application;
 
 import java.awt.Point;
 import java.util.HashMap;
+
+import javax.xml.ws.Response;
+
 import org.json.JSONObject;
+
+import exception.DarException;
 import serveur.ReponseHttp;
 import serveur.Service;
+import serveur.TemplateGenere;
+import tools.Template;
 
 public class Points2D extends Service {
 
@@ -115,6 +122,35 @@ public class Points2D extends Service {
 			reponse.setCorps("ok");
 		else
 			reponse.setCorps("ko");
+		return reponse;
+	}
+	
+	public ReponseHttp afficherPoint(String id){
+		HashMap<String, String> map = new HashMap<>();
+		map.put("id", id);
+		Point p = points.get(id);
+		map.put("x", p.x + "");
+		map.put("y", p.y + "");
+		
+		ReponseHttp reponse = new ReponseHttp();
+		reponse.setCorps(Template.transform("ressources/affichagePoint2D.html", map));
+		reponse.setEntete("Content-type", "text/html");
+		return reponse;
+	}
+	
+	public ReponseHttp afficherPoint2(String id){
+		Point p = points.get(id);
+		
+		ReponseHttp reponse = new ReponseHttp();
+		String s = "";
+		
+		try {
+			s = Template.transform("ressources/affichagePoint2D.html", p);
+		} catch (DarException e) {
+			e.printStackTrace();
+		}
+		reponse.setCorps(s);
+		reponse.setEntete("Content-type", "text/html");
 		return reponse;
 	}
 }

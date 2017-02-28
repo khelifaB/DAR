@@ -7,5 +7,7 @@
 				   { "type" : "GET", 	"url" : "/p/([0-9]+)", 	 "methode" : "putPointById" },
 				   { "type" : "POST", 	"url" : "/p", 			 "methode" : "creerPoint" },
 				   { "type" : "DELETE", "url" : "/p/([0-9]+)", 	 "methode" : "supprimerPoint" }
+				   { "type" : "GET", "url" : "/p/affiche/([0-9]+)", 	 "methode" : "afficherPoint" }
+				   { "type" : "GET", "url" : "/p/affiche2/([0-9]+)", 	 "methode" : "afficherPoint2" }
 				 ]
 }
