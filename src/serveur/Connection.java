@@ -68,7 +68,7 @@ public class Connection extends Thread {
 				return;
 			}
 			
-			System.out.println("#########################\n"+requete+"##################\n");
+			System.out.println("#########################\n"+requete+"\n##################\n");
 			System.out.println("************** "+requete.getUrl()+" ********************");
 
 			if(!requete.estValide()){
@@ -83,7 +83,6 @@ public class Connection extends Thread {
 			
 			// Sessions & coockie
 			String coockie = requete.getEntete("Cookie");
-//			System.out.println("------------ "+coockie+" ---------------");
 			if(gestionSession.existeSession(coockie)){ // Il existe deja une session
 				SessionHttp session = gestionSession.getSession(coockie);
 				session.setDateDerniereVisite(System.currentTimeMillis());
@@ -101,7 +100,8 @@ public class Connection extends Thread {
 			
 			
 			ps.print(reponse.toString());
-			System.out.println("REPONSE HTTP :\n"+reponse.toString()); // TODO remove
+			System.out.println("##################### REPONSE HTTP ################\n"+
+			reponse.toString()+"\n#################################################"); // TODO remove
 			ps.flush();
 			ps.close();
 		}

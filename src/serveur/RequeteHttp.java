@@ -87,16 +87,19 @@ public class RequeteHttp {
 
 	public void parse(String requete)  {
 
-		if(requete==null || requete.equals(""))
+		if(requete==null || requete.equals("")){
 			valide=false;
-
+			System.out.println("requette mal formee : vide");
+			return;
+		}
 		try{
 			String[] lignes = requete.split(System.lineSeparator());
 
 			// premiére ligne method /chemin version
 			String[] ligne1 = lignes[0].split(" ");
 			setVerbe(VerbeHttp.valueOf(ligne1[0]));
-			url.setUrl(ligne1[1]);url.parse(ligne1[1]);
+			url.setUrl(ligne1[1]);
+			url.parse(ligne1[1]);
 			setVersion(ligne1[2]);
 
 			// entetes
@@ -110,14 +113,11 @@ public class RequeteHttp {
 					ajouteEntete(m.group(1), m.group(2));
 				}
 			}
-
-
-
 		}
 		catch(Exception e){
 			valide=false;
 			e.printStackTrace();
-			System.out.println("requette mal formée "+e.getMessage());
+			System.out.println("requette mal formee "+e.getMessage());
 			return;
 		}
 
