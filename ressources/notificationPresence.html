@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="ISO-8859-1">
+		<title>Gestion utilisateur</title>
+	</head>
+	<body>
+		
+		<ul>
+			<li> <a href="http://127.0.0.1:8080/notificationPresence"> Accueil </a> </li>
+			
+		</ul>
+	
+		Inscription
+		<form action="http://127.0.0.1:8080/notificationPresence/inscription" method="post"> 
+			Nom : <br/>
+			<input type="text" name="nom" value=""/> <br/>
+			Mot de Passe : <br/>
+			<input type="password" name="motDePasse"  /> <br /> 
+			<input type="submit" name="inscription" value="S'inscrire"/>
+		</form><br/>
+		
+		Connection
+		
+		<form action="http://127.0.0.1:8080/notificationPresence/connection" method="post"> 
+			Nom : <br/>
+			<input type="text" name="nom" value=""/> <br/>
+			Mot de Passe : <br/>
+			<input type="password" name="motDePasse"  /> <br /> 
+			<input type="submit" name="connection" value="Se connecte"/>
+		</form>
+	
+	</body>
+</html>
