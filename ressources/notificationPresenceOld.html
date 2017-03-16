@@ -79,7 +79,6 @@
 
 	</div>
 	<span id=utilisateur>
-		 <span id="nomUser">${nom}</span> ${disponible}
 	</span>
 	<div id="listeDispo"></div>
 
@@ -166,21 +165,18 @@
 			var xhttp = new XMLHttpRequest();
 			xhttp.onreadystatechange = function() {
 				if (xhttp.readyState == 4 && xhttp.status == 200) {
-					var reponse = JSON.parse(xhttp.responseText);
 					
-					if(reponse.KO!=undefined){
-						console.log(reponse);
-						alert(reponse.KO);
-					}
-					else if(reponse.OK!=undefined){
-						document.getElementById("liDeconnection").style="visibility:visible; float: right";
-						document.getElementById("liConnection").style="display:none";
-						document.getElementById("liInscription").style="display:none";
-						document.getElementById("form").style='display:none';
-						utilisateur=reponse.utilisateur;
-						getStatut();
-						alert(reponse.OK);
-					}
+					document.getElementsByTagName("html")[0].innerHTML=xhttp.responseText;
+					document.getElementById("liDeconnection").style="visibility:visible; float: right";
+					document.getElementById("liConnection").style="display:none";
+					document.getElementById("liInscription").style="display:none";
+					document.getElementById("form").style='display:none';
+					utilisateur={"nom":document.getElementById("nomUser").innerHTML};
+					console.log(utilisateur);
+					getStatut();
+					
+					
+					
 				}
 				else if (xhttp.readyState == 4 && xhttp.status != 200){
 					console.log(reponse);
@@ -214,6 +210,34 @@
 			};
 			
 			xhttp.open("GET", "/notificationPresence/deconnection", true);
+			xhttp.send();
+		}
+		
+		function disponible(){
+			var xhttp = new XMLHttpRequest();
+			xhttp.onreadystatechange = function() {
+				if (xhttp.readyState == 4 && xhttp.status == 200) {
+					var reponse = JSON.parse(xhttp.responseText);
+					
+					utilisateur=reponse;
+					if(utilisateur.disponible==true){
+						document.getElementById("statut").innerHTML="Disponible";
+						document.getElementById("statut").setAttribute("class","dispo"); 
+					}
+					else{
+						document.getElementById("statut").innerHTML="Indisponible";
+						document.getElementById("statut").setAttribute("class","indispo");
+					}
+					
+					getStatus();
+				}
+				else if (xhttp.readyState == 4 && xhttp.status != 200){
+					console.log(reponse);
+					alert(reponse);
+				}
+			};
+			
+			xhttp.open("GET", "/notificationPresence/disponible/"+nom, true);
 			xhttp.send();
 		}
 		

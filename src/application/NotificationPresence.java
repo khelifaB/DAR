@@ -8,6 +8,7 @@ import org.json.simple.JSONArray;
 import exception.DarException;
 import serveur.ReponseHttp;
 import serveur.Service;
+import tools.Fichier;
 import tools.Template;
 
 public class NotificationPresence extends Service {
@@ -18,6 +19,7 @@ public class NotificationPresence extends Service {
 		private int id;
 		private String nom;
 		private String motDePasse;
+		private String disponibilite;
 		private boolean connecte;
 		private boolean disponible;
 		public Utilisateur(String nom, String motDePasse) {
@@ -26,6 +28,7 @@ public class NotificationPresence extends Service {
 			this.id=-1;
 			this.connecte=false;
 			this.disponible=false;
+			this.disponibilite="Indisponible";
 		}
 		public void setNom(String nom) {
 			this.nom = nom;
@@ -45,6 +48,7 @@ public class NotificationPresence extends Service {
 			jo.put("nom", nom);
 			jo.put("connecte", connecte);
 			jo.put("disponible", disponible);
+			jo.put("disponibilite", disponibilite);
 			return jo;
 		}
 		@Override
@@ -137,7 +141,7 @@ public class NotificationPresence extends Service {
 					jo.put("OK", "Connection reussie Bienvenue "+nom);
 					try {
 						reponse.setEntete("Content-type", "text/html");
-						reponse.setCorps(Template.transform("ressources/notificationPresenceTemplate.html", u));
+						reponse.setCorps(Template.transform("ressources/notificationPresence.html", u));
 						return reponse;
 					} catch (DarException e) {
 						
@@ -172,6 +176,8 @@ public class NotificationPresence extends Service {
 		else{
 			Utilisateur u = (Utilisateur)requete.getSession().getAttribut("utilisateur");
 			u.connecte=false;
+			u.disponible=false;
+			u.disponibilite="Indisponible";
 			requete.getSession().supprimerAttribut("utilisateur");
 			jo.put("OK", "A bientot "+u.nom);
 			jo.put("nom", u.getNom());
@@ -184,6 +190,7 @@ public class NotificationPresence extends Service {
 		ReponseHttp reponse = new ReponseHttp();
 		reponse.setEntete("Content-type", "application/json");
 		utilisateurs.get(nom).disponible=true;
+		utilisateurs.get(nom).disponibilite="Disponible";
 		reponse.setCorps(utilisateurs.get(nom).toJSON().toString());
 		return reponse;
 	}
@@ -193,6 +200,7 @@ public class NotificationPresence extends Service {
 			ReponseHttp reponse = new ReponseHttp();
 			reponse.setEntete("Content-type", "application/json");
 			utilisateurs.get(nom).disponible=false;
+			utilisateurs.get(nom).disponibilite="Indisponible";
 			reponse.setCorps(utilisateurs.get(nom).toJSON().toString());
 			return reponse;
 		}
@@ -214,5 +222,28 @@ public class NotificationPresence extends Service {
 		reponse.setCorps(ja.toJSONString());
 		return reponse;
 	}
+	public ReponseHttp index(){
+		System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>><<  INDEX >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+		ReponseHttp reponse = new ReponseHttp();
+		reponse.setEntete("Content-type", "text/html");
+		if(requete.getSession().existeAttribut("utilisateur")){
+			
+			try {
+				System.out.println( "+++++++++++++++++++++++++++++ "+(Utilisateur)(requete.getSession().getAttribut("utilisateur")));
+				reponse.setCorps(Template.transform("ressources/notificationPresenceConnecte.html", (Utilisateur)(requete.getSession().getAttribut("utilisateur"))));
+			} catch (DarException e) {
+				e.printStackTrace();
+			}
+		}
+		else{
+			try {
+				reponse.setCorps(Fichier.lectureFichier("ressources/notificationPresence.html"));
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return reponse;
+	}
+	
 }
 

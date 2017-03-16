@@ -34,12 +34,19 @@ public class Dispatcher {
 
 			JSONArray methodes = (JSONArray)jsonObject.get("methodes");
 
+			boolean index = false;
+			String methodeIndex ="";
 			for(Object o : methodes){
 				JSONObject oj = (JSONObject) o;
 				String urli = (String) oj.get("url");
 				String verbe = (String) oj.get("type");
 				String methodeJava = (String)oj.get("methode");
 
+				if(urli.equals("/")){
+					index = true;
+					methodeIndex = methodeJava;
+					
+				}
 				if(verbe.equals(requete.getVerbe().toString())) {
 					if(requete.getUrl().getChemin().indexOf('/', 1)!=-1){
 						String chemin = requete.getUrl().getChemin().substring(requete.getUrl().getChemin().indexOf('/', 1));
@@ -66,9 +73,13 @@ public class Dispatcher {
 				}
 			}
 
+			if(index){
+				ReponseHttp reponse =(ReponseHttp) Reflexion.invokeMethod(classe, methodeIndex,null, requete);
+				return reponse;
+			}
 			// si pas de methode specifique 
 			// Construire et renvoyre la page d'accueil de l'application
-
+			
 			String cheminAccueil = "ressources/"+nomApplication+".html";
 			File f = new File("ressources/"+nomApplication+".html");
 			if(f.exists()){
