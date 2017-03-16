@@ -3,20 +3,29 @@ package application;
 import java.util.HashMap;
 
 import org.json.JSONObject;
+import org.json.simple.JSONArray;
 
+import exception.DarException;
 import serveur.ReponseHttp;
 import serveur.Service;
+import tools.Template;
 
 public class NotificationPresence extends Service {
 
 	private static HashMap<String, Utilisateur> utilisateurs = new HashMap<String, Utilisateur>();
 
 	public class Utilisateur{
+		private int id;
 		private String nom;
 		private String motDePasse;
+		private boolean connecte;
+		private boolean disponible;
 		public Utilisateur(String nom, String motDePasse) {
 			this.nom = nom;
 			this.motDePasse = motDePasse;
+			this.id=-1;
+			this.connecte=false;
+			this.disponible=false;
 		}
 		public void setNom(String nom) {
 			this.nom = nom;
@@ -30,9 +39,23 @@ public class NotificationPresence extends Service {
 		public String getNom() {
 			return nom;
 		}
+		public JSONObject toJSON() {
+			JSONObject jo = new JSONObject();
+			jo.put("id", id);
+			jo.put("nom", nom);
+			jo.put("connecte", connecte);
+			jo.put("disponible", disponible);
+			return jo;
+		}
 		@Override
 		public String toString() {
-			return "Utilisateur [nom=" + nom + ", motDePasse=" + motDePasse + "]";
+			return "Utilisateur [id="+id+
+					", nom=" + nom + 
+					", motDePasse=" + 
+					motDePasse + 
+					" connecte="+connecte+
+					", disponible="+disponible+
+					"]";
 		}
 
 	}
@@ -68,6 +91,7 @@ public class NotificationPresence extends Service {
 				reponse.setCorps(jo.toString());
 				return reponse;
 			}
+			u.id=utilisateurs.size()+1;
 			utilisateurs.put(nom, u);
 			jo.put("OK", nom+" vous etes bien inscrit ");
 			jo.put("nom", u.getNom());
@@ -108,10 +132,20 @@ public class NotificationPresence extends Service {
 				
 				if(utilisateurs.containsKey(nom) && utilisateurs.get(nom).getMotDePasse().equals(motDePasse)){
 					Utilisateur u = utilisateurs.get(nom);
+					u.connecte=true;
 					requete.getSession().setAttribut("utilisateur", u);
-					jo.put("OK", "Connection reussit Bienvenue "+nom);
-					jo.put("nom", u.getNom());
-					reponse.setCorps(jo.toString());
+					jo.put("OK", "Connection reussie Bienvenue "+nom);
+					try {
+						reponse.setEntete("Content-type", "text/html");
+						reponse.setCorps(Template.transform("ressources/notificationPresenceTemplate.html", u));
+						return reponse;
+					} catch (DarException e) {
+						
+						e.printStackTrace();
+					}
+//					jo.put("nom", u.getNom());
+//					jo.put("utilisateur", u.toJSON());
+//					reponse.setCorps(jo.toString());
 					return reponse;
 				}
 				else{
@@ -137,11 +171,47 @@ public class NotificationPresence extends Service {
 		}
 		else{
 			Utilisateur u = (Utilisateur)requete.getSession().getAttribut("utilisateur");
+			u.connecte=false;
 			requete.getSession().supprimerAttribut("utilisateur");
 			jo.put("OK", "A bientot "+u.nom);
 			jo.put("nom", u.getNom());
 			reponse.setCorps(jo.toString());
 		}
+		return reponse;
+	}
+	// GET /notificationPresence/disponible 
+	public ReponseHttp disponible(String nom){
+		ReponseHttp reponse = new ReponseHttp();
+		reponse.setEntete("Content-type", "application/json");
+		utilisateurs.get(nom).disponible=true;
+		reponse.setCorps(utilisateurs.get(nom).toJSON().toString());
+		return reponse;
+	}
+	
+	// GET /notificationPresence/indisponible 
+		public ReponseHttp indisponible(String nom){
+			ReponseHttp reponse = new ReponseHttp();
+			reponse.setEntete("Content-type", "application/json");
+			utilisateurs.get(nom).disponible=false;
+			reponse.setCorps(utilisateurs.get(nom).toJSON().toString());
+			return reponse;
+		}
+	
+	// GET /notificationPresence/utilisateurs
+	public ReponseHttp utilisateurs(){
+		ReponseHttp reponse = new ReponseHttp();
+		reponse.setEntete("Content-type", "application/json");
+		JSONArray ja = new JSONArray();
+		JSONObject jo = new JSONObject();
+		for( String u: utilisateurs.keySet() ){
+			jo = new JSONObject();
+			jo.put("id", utilisateurs.get(u).id);
+			jo.put("nom", u);
+			jo.put("connecte", utilisateurs.get(u).connecte);
+			jo.put("disponible", utilisateurs.get(u).disponible);
+			ja.add(jo);
+		}
+		reponse.setCorps(ja.toJSONString());
 		return reponse;
 	}
 }

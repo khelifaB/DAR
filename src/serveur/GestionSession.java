@@ -48,7 +48,7 @@ public class GestionSession {
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
 		for(String coockie: sessions.keySet()){
-			sb.append(coockie +":"+sessions.get(coockie)+System.lineSeparator());
+			sb.append(coockie +" : "+sessions.get(coockie)+System.lineSeparator());
 		}
 		return sb.toString();
 	}

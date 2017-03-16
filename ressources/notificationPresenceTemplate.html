@@ -79,6 +79,7 @@
 
 	</div>
 	<span id=utilisateur>
+		 <span id="nomUser">${nom}</span> ${disponible}
 	</span>
 	<div id="listeDispo"></div>
 
@@ -165,18 +166,21 @@
 			var xhttp = new XMLHttpRequest();
 			xhttp.onreadystatechange = function() {
 				if (xhttp.readyState == 4 && xhttp.status == 200) {
+					var reponse = JSON.parse(xhttp.responseText);
 					
-					document.getElementsByTagName("html")[0].innerHTML=xhttp.responseText;
-					document.getElementById("liDeconnection").style="visibility:visible; float: right";
-					document.getElementById("liConnection").style="display:none";
-					document.getElementById("liInscription").style="display:none";
-					document.getElementById("form").style='display:none';
-					utilisateur={"nom":document.getElementById("nomUser").innerHTML};
-					console.log(utilisateur);
-					getStatut();
-					
-					
-					
+					if(reponse.KO!=undefined){
+						console.log(reponse);
+						alert(reponse.KO);
+					}
+					else if(reponse.OK!=undefined){
+						document.getElementById("liDeconnection").style="visibility:visible; float: right";
+						document.getElementById("liConnection").style="display:none";
+						document.getElementById("liInscription").style="display:none";
+						document.getElementById("form").style='display:none';
+						utilisateur=reponse.utilisateur;
+						getStatut();
+						alert(reponse.OK);
+					}
 				}
 				else if (xhttp.readyState == 4 && xhttp.status != 200){
 					console.log(reponse);
