@@ -1,7 +1,9 @@
 {
 	"url" : "/notificationPresence",
 	"classe" : "application.NotificationPresence"
-	"methodes" : [ {"type" : "POST", "url" : "/inscription", "methode" : "inscription"},
+	"methodes" : [ 
+				   {"type" : "GET", "url" : "/", "methode" : "index"},
+				   {"type" : "POST", "url" : "/inscription", "methode" : "inscription"},
 				   {"type" : "POST", "url" : "/connection", "methode" : "connection"},
 				   {"type" : "GET", "url" : "/deconnection", "methode" : "deconnection"},
 				   {"type" : "GET", "url": "/utilisateurs", "methode" : "utilisateurs"},

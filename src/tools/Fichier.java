@@ -39,7 +39,7 @@ public class Fichier {
 
 			}
 		} catch (FileNotFoundException exception) {
-			System.out.println("Le fichier n'a pas été trouvé");
+			System.out.println("Le fichie "+ path +" n'a pas ete trouve");
 		}
 		return lines;
 	}

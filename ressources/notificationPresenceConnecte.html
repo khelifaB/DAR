@@ -14,7 +14,7 @@
 	}
 	
 	#liDeconnection {
-		visibility: hidden;
+		visibility: visible;
 	}
 	
 	#menu ul {
@@ -38,7 +38,7 @@
 	}
 	
 	#utilisateur{
-		display:none;
+		display:block;
 	}
 	
 	li a:hover {
@@ -55,10 +55,6 @@
 	
 	.indispo {
 		background-color: red;
-	}
-	#centrer{
-	margin: 0px auto;
-width: 100px;
 	}
 </style>
 </head>
@@ -88,19 +84,21 @@ width: 100px;
 	</div>
 	<span id=utilisateur>
 		 Bonjour <span id="nomUser">${nom}</span> 
-		 Statut : <span id="statut"></span> 
+		 Statut : <span id="statut">${disponibilite}</span> 
 		
 		 <button id="disponible" onClick="disponible()"> Disponible </button>
 		 <button id="indisponible" onClick="indisponible()"> Indisponible </button>
 	</span>
-	<div id = "centrer">
+	
 	<h2> Liste des utlisateurs </h2>
+	
 	<div id="listeDispo"></div>
-	</div>
 
 </body>
 <script>
-		utilisateur={};
+		utilisateur={
+					 nom:"${nom}", disponibilite: "${disponibilite}", disponible:${disponible}
+					 };
 		getStatut();
 		//setInterval(getStatut,5000);
 		function affiche(id){
@@ -122,6 +120,16 @@ width: 100px;
 			
 		}
 		function getStatut() {
+		
+			if(utilisateur.disponible==true){
+				document.getElementById("statut").innerHTML="Disponible";
+				document.getElementById("statut").setAttribute("class","dispo"); 
+			}
+			else{
+				document.getElementById("statut").innerHTML="Indisponible";
+				document.getElementById("statut").setAttribute("class","indispo");
+			}
+		
 			var xhttp = new XMLHttpRequest();
 			xhttp.onreadystatechange = function() {
 				if (xhttp.readyState == 4 && xhttp.status == 200) {
@@ -270,7 +278,7 @@ width: 100px;
 				}
 			};
 			
-			xhttp.open("GET", "/notificationPresence/disponible/"+nom, true);
+			xhttp.open("GET", "/notificationPresence/disponible/${nom}", true);
 			xhttp.send();
 		}
 		
@@ -298,7 +306,7 @@ width: 100px;
 				}
 			};
 			
-			xhttp.open("GET", "/notificationPresence/indisponible/"+nom, true);
+			xhttp.open("GET", "/notificationPresence/indisponible/${nom}", true);
 			xhttp.send();
 		}
 		
