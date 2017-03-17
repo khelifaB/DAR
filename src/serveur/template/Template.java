@@ -1,8 +1,9 @@
-package tools;
+package serveur.template;
 
 import java.lang.reflect.Field;
 import java.util.Map;
 
+import tools.Fichier;
 import exception.DarException;
 
 public class Template {

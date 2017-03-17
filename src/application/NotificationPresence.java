@@ -8,8 +8,8 @@ import org.json.simple.JSONArray;
 import exception.DarException;
 import serveur.ReponseHttp;
 import serveur.Service;
+import serveur.template.Template;
 import tools.Fichier;
-import tools.Template;
 
 public class NotificationPresence extends Service {
 

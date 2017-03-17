@@ -4,12 +4,13 @@ import java.awt.Point;
 import java.util.HashMap;
 
 
+
 import org.json.JSONObject;
 
 import exception.DarException;
 import serveur.ReponseHttp;
 import serveur.Service;
-import tools.Template;
+import serveur.template.Template;
 
 public class Points2D extends Service {
 

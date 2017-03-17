@@ -6,6 +6,9 @@ import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.net.Socket;
 
+import serveur.dispatcher.Dispatcher;
+import serveur.session.GestionSession;
+import serveur.session.SessionHttp;
 import application.EchoServeur;
 
 

@@ -7,6 +7,8 @@ import java.util.regex.Pattern;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import serveur.session.SessionHttp;
+
 
 public class RequeteHttp {
 

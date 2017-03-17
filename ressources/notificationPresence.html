@@ -39,6 +39,8 @@
 	
 	#utilisateur{
 		display:none;
+		margin: 15px;
+    	padding: 15px;
 	}
 	
 	li a:hover {
@@ -57,8 +59,16 @@
 		background-color: red;
 	}
 	#centrer{
-	margin: 0px auto;
-width: 100px;
+		margin: 0px auto;
+		width: 300px;
+	}
+	button{
+	padding: 2px;
+	margin: 5px;
+	}
+	#nomUser{
+		font-size: x-large;
+		font-weight: bold;
 	}
 </style>
 </head>
@@ -88,14 +98,14 @@ width: 100px;
 	</div>
 	<span id=utilisateur>
 		 Bonjour <span id="nomUser">${nom}</span> 
-		 Statut : <span id="statut"></span> 
+		 vous êtes : <span id="statut"></span> 
 		
 		 <button id="disponible" onClick="disponible()"> Disponible </button>
 		 <button id="indisponible" onClick="indisponible()"> Indisponible </button>
 	</span>
 	<div id = "centrer">
-	<h2> Liste des utlisateurs </h2>
-	<div id="listeDispo"></div>
+		<h2> Liste des utilisateurs </h2>
+		<div id="listeDispo"></div>
 	</div>
 
 </body>
@@ -122,6 +132,16 @@ width: 100px;
 			
 		}
 		function getStatut() {
+			
+			if(utilisateur.disponible==true){
+				document.getElementById("statut").innerHTML="Disponible";
+				document.getElementById("statut").setAttribute("class","dispo"); 
+			}
+			else{
+				document.getElementById("statut").innerHTML="Indisponible";
+				document.getElementById("statut").setAttribute("class","indispo");
+			}
+			
 			var xhttp = new XMLHttpRequest();
 			xhttp.onreadystatechange = function() {
 				if (xhttp.readyState == 4 && xhttp.status == 200) {

@@ -1,4 +1,4 @@
-package serveur;
+package serveur.dispatcher;
 
 import java.io.File;
 import java.io.FileReader;
@@ -10,6 +10,8 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
+import serveur.ReponseHttp;
+import serveur.RequeteHttp;
 import tools.Fichier;
 import tools.Reflexion;
 

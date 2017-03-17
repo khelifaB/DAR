@@ -1,9 +1,12 @@
-package serveur;
+package serveur.session;
 
 
 import java.util.HashMap;
 import java.util.Timer;
 import java.util.TimerTask;
+
+import serveur.ReponseHttp;
+import serveur.RequeteHttp;
 
 public class GestionSession {
 	private static HashMap<String, SessionHttp> sessions;
