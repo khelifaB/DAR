@@ -11,6 +11,7 @@ import serveur.Service;
 import serveur.template.Template;
 import tools.Fichier;
 
+
 public class NotificationPresence extends Service {
 
 	private static HashMap<String, Utilisateur> utilisateurs = new HashMap<String, Utilisateur>();

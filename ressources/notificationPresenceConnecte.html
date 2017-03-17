@@ -114,7 +114,7 @@
 					 nom:"${nom}", disponibilite: "${disponibilite}", disponible:${disponible}
 					 };
 		getStatut();
-		//setInterval(getStatut,5000);
+		setInterval(getStatut,5000);
 		function affiche(id){
 			document.getElementById("form").style='display:block';
 			
@@ -252,6 +252,7 @@
 					if(reponse.KO!=undefined){
 						console.log(reponse);
 						alert(reponse.KO);
+						location.reload();
 					}
 					else if(reponse.OK!=undefined){
 						alert(reponse.OK);

@@ -41,6 +41,7 @@
 		display:none;
 		margin: 15px;
     	padding: 15px;
+
 	}
 	
 	li a:hover {
@@ -59,6 +60,7 @@
 		background-color: red;
 	}
 	#centrer{
+
 		margin: 0px auto;
 		width: 300px;
 	}
@@ -69,6 +71,7 @@
 	#nomUser{
 		font-size: x-large;
 		font-weight: bold;
+
 	}
 </style>
 </head>
@@ -99,20 +102,23 @@
 	<span id=utilisateur>
 		 Bonjour <span id="nomUser">${nom}</span> 
 		 vous êtes : <span id="statut"></span> 
+
 		
 		 <button id="disponible" onClick="disponible()"> Disponible </button>
 		 <button id="indisponible" onClick="indisponible()"> Indisponible </button>
 	</span>
 	<div id = "centrer">
+
 		<h2> Liste des utilisateurs </h2>
 		<div id="listeDispo"></div>
+
 	</div>
 
 </body>
 <script>
 		utilisateur={};
 		getStatut();
-		//setInterval(getStatut,5000);
+		setInterval(getStatut,5000);
 		function affiche(id){
 			document.getElementById("form").style='display:block';
 			
@@ -250,6 +256,7 @@
 					if(reponse.KO!=undefined){
 						console.log(reponse);
 						alert(reponse.KO);
+						location.reload();
 					}
 					else if(reponse.OK!=undefined){
 						alert(reponse.OK);
