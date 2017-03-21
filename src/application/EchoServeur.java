@@ -8,9 +8,12 @@ public class EchoServeur extends Service{
 
 	public EchoServeur() {
 	}
-	
 	@Override
 	protected ReponseHttp doGet(RequeteHttp requete) {
+		return null;
+	}
+	
+	public ReponseHttp doGet() {
 		ReponseHttp reponse = new ReponseHttp();
 		String enteteAccept = requete.getEntete("Accept");
 		String[] typesAccept = enteteAccept.split(",");

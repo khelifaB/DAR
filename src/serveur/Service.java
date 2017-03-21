@@ -1,10 +1,6 @@
 package serveur;
 
 
-
-
-
-
 public abstract class Service {
 
 	protected RequeteHttp requete;

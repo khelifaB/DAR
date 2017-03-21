@@ -9,7 +9,6 @@ import java.net.Socket;
 import serveur.dispatcher.Dispatcher;
 import serveur.session.GestionSession;
 import serveur.session.SessionHttp;
-import application.EchoServeur;
 
 
 public class Connection extends Thread {

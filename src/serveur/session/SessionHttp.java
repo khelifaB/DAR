@@ -9,12 +9,12 @@ public class SessionHttp {
 	private long dateCreation;
 	private long dateDerniereVisite;
 	private String ID;
-	
+
 	public SessionHttp() {
-	attributs = new HashMap<String, Object>();
-	dateCreation = System.currentTimeMillis();
-	dateDerniereVisite=dateCreation;
-	ID="";
+		attributs = new HashMap<String, Object>();
+		dateCreation = System.currentTimeMillis();
+		dateDerniereVisite=dateCreation;
+		ID="";
 	}
 	public Object getAttribut(String nomAttr) {
 		return attributs.get(nomAttr);
@@ -37,7 +37,7 @@ public class SessionHttp {
 	public long getDateDerniereVisite() {
 		return dateDerniereVisite;
 	}
-	
+
 	public void setDateDerniereVisite(long date) {
 		dateDerniereVisite=date;
 	}

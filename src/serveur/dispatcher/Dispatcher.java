@@ -2,9 +2,12 @@ package serveur.dispatcher;
 
 import java.io.File;
 import java.io.FileReader;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -28,14 +31,32 @@ public class Dispatcher {
 
 		try {     
 			JSONObject jsonObject =  (JSONObject)  parser.parse(new FileReader("mappingJSON/"+nomApplication+".json"));
-
+			
+			
 			String url = (String) jsonObject.get("url");
 			System.out.println(url);
 
 			String classe = (String) jsonObject.get("classe");
 
 			JSONArray methodes = (JSONArray)jsonObject.get("methodes");
-
+			List<String> doublan = new ArrayList<>();
+			for(Object o : methodes){
+				JSONObject oj = (JSONObject) o;
+				String verbe = (String) oj.get("type");
+				String urli = (String) oj.get("url");
+				doublan.add(verbe+urli);
+			}
+			
+			// Detection de conflit d'urls
+			List<String> doublan1 = doublan.stream().distinct().collect(Collectors.toList());
+			if(doublan.size()!=doublan1.size()){
+				ReponseHttp reponse = new ReponseHttp();
+				reponse.setStatut(404);
+				doublan = removeAll(doublan, doublan1);
+				reponse.setCorps("Conflit des urls "+doublan);
+				return reponse;
+			}
+			
 			boolean index = false;
 			String methodeIndex ="";
 			for(Object o : methodes){
@@ -58,7 +79,8 @@ public class Dispatcher {
 							Pattern p = Pattern.compile(urli);
 							Matcher m = p.matcher(chemin);
 							String[] paramatere=null;
-
+							
+							// extraction des parametre de l'url
 							if(m.matches()){
 								paramatere = new String[m.groupCount()];
 								for(int i=1; i<= m.groupCount(); i++){
@@ -104,6 +126,17 @@ public class Dispatcher {
 		reponse.setStatut(404);
 		reponse.setCorps("url non trouvee");
 		return reponse;
+	}
+	
+	public static List<String> removeAll(List<String> l1, List<String> l2){
+		for (int i = 0; i < l2.size(); i++) {
+			for (int j = 0; j < l1.size(); j++) {
+				if(l2.get(i).equals(l1.get(j))){
+					l1.remove(j);
+				}
+			}
+		}
+		return l1;
 	}
 
 }

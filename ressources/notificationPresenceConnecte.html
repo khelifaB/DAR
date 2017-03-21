@@ -11,6 +11,8 @@
 	
 	#form {
 		display: none;
+		margin: 0 auto;
+		width: 100px;
 	}
 	
 	#liDeconnection {
@@ -35,6 +37,7 @@
 		text-align: center;
 		padding: 14px 16px;
 		text-decoration: none;
+		cursor: pointer;
 	}
 	
 	#utilisateur{
@@ -77,10 +80,12 @@
 	<div id=menu>
 		<ul>
 			<li><a id="liAccueil" href="http://127.0.0.1:8080/notificationPresence" class="active"> Accueil </a></li>
+			<!-- 
 			<li id="liInscription"><a onClick="affiche('btnInscription')">Inscription</a>
 			</li>
 			<li id="liConnection"><a onClick="affiche('btnConnection')">Connection</a>
 			</li>
+			 -->
 			<li id="liDeconnection" style="float: right"><a onClick="deconnection()">Deconnection</a></li>
 		</ul>
 	</div>
@@ -114,7 +119,7 @@
 					 nom:"${nom}", disponibilite: "${disponibilite}", disponible:${disponible}
 					 };
 		getStatut();
-		setInterval(getStatut,5000);
+		setInterval(getStatut,1000);
 		function affiche(id){
 			document.getElementById("form").style='display:block';
 			

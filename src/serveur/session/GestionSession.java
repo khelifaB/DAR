@@ -16,8 +16,6 @@ public class GestionSession {
 	}
 	
 	public boolean existeSession(String coockie) {
-//		System.out.println(sessions.containsKey(coockie));
-//		System.out.println(sessions.keySet());
 		return sessions.containsKey(coockie);
 	}
 	public SessionHttp getSession(String coockie) {

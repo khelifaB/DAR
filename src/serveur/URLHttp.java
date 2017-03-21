@@ -6,6 +6,7 @@ import java.util.HashMap;
  * @author khelifa.berrefas
  *
  */
+
 public class URLHttp {
 
 	private String url; // url complete chemin et parametres

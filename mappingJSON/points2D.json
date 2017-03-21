@@ -1,13 +1,14 @@
 {
 	"url" : "/points2D",
-	"classe" : "application.Points2D"
-	"methodes" : [ { "type" : "GET", 	"url" : "/list", 		 "methode" : "list"},
-				   { "type" : "GET", 	"url" : "/p/([0-9]+)/x", "methode" : "getXbyId" },	
-				   { "type" : "GET", 	"url" : "/p/([0-9]+)/y", "methode" : "getYbyId" },
-				   { "type" : "GET", 	"url" : "/p/([0-9]+)", 	 "methode" : "putPointById" },
-				   { "type" : "POST", 	"url" : "/p", 			 "methode" : "creerPoint" },
-				   { "type" : "DELETE", "url" : "/p/([0-9]+)", 	 "methode" : "supprimerPoint" }
-				   { "type" : "GET", "url" : "/p/affiche/([0-9]+)", 	 "methode" : "afficherPoint" }
-				   { "type" : "GET", "url" : "/p/affiche2/([0-9]+)", 	 "methode" : "afficherPoint2" }
+	"classe" : "application.Points2D",
+	"methodes" : [ 
+	   { "type" : "GET", 	"url" : "/list", 		 "methode" : "list"},
+	   { "type" : "GET", 	"url" : "/p/([0-9]+)/x", "methode" : "getXbyId" },	
+	   { "type" : "GET", 	"url" : "/p/([0-9]+)/y", "methode" : "getYbyId" },
+	   { "type" : "PUT", 	"url" : "/p/([0-9]+)", 	 "methode" : "putPointById" },
+	   { "type" : "POST", 	"url" : "/p", 			 "methode" : "creerPoint" },
+	   { "type" : "DELETE", "url" : "/p/([0-9]+)", 	 "methode" : "supprimerPoint" },
+	   { "type" : "GET", "url" : "/p/affiche/([0-9]+)", 	 "methode" : "afficherPoint" },
+	   { "type" : "GET", "url" : "/p/affiche2/([0-9]+)", 	 "methode" : "afficherPoint2" }
 				 ]
 }

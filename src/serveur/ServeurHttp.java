@@ -23,7 +23,9 @@ public class ServeurHttp {
 		try{
 			port = Integer.parseInt(args[0]);
 		}catch (Exception e) {
-			System.out.println("numero de port non valide");
+			port = 8080;
+			//System.out.println("numero de port non valide");
+			
 			return;
 		}
 		

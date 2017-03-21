@@ -1,6 +1,6 @@
 {
 	"url" : "/notificationPresence",
-	"classe" : "application.NotificationPresence"
+	"classe" : "application.NotificationPresence",
 	"methodes" : [ 
 				   {"type" : "GET", "url" : "/", "methode" : "index"},
 				   {"type" : "POST", "url" : "/inscription", "methode" : "inscription"},
